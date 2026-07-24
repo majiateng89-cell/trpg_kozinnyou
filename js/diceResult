@@ -1,0 +1,23 @@
+class DiceResult{
+
+    constructor(){
+
+        this.formula="";
+
+        this.timestamp=new Date();
+
+        this.total=0;
+
+        this.modifier=0;
+
+        this.dice=[];
+
+        this.critical=false;
+
+        this.fumble=false;
+
+        this.systemResult=null;
+
+    }
+
+}
