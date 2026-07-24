@@ -117,4 +117,6 @@ class DiceParser {
 =========================================
 */
 
-const parser = new DiceParser();
+class DiceParser {
+
+}
