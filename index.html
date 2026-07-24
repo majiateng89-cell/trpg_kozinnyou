@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TRPG Dice</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+<header>
+    <h1>🎲 TRPG Dice</h1>
+</header>
+
+<main>
+
+    <!-- 入力エリア -->
+    <section id="dice-input">
+
+        <h2>ダイスロール</h2>
+
+        <div class="input-group">
+
+            <label for="diceNotation">
+                ダイス記法
+            </label>
+
+            <input
+                id="diceNotation"
+                type="text"
+                placeholder="例：2d6+3"
+                autocomplete="off">
+
+            <button id="rollButton">
+                🎲 ロール
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- システム選択 -->
+    <section id="system">
+
+        <h2>TRPGシステム</h2>
+
+        <select id="gameSystem">
+
+            <option value="normal">通常</option>
+
+            <option value="coc6">
+                クトゥルフ神話TRPG 第6版
+            </option>
+
+            <option value="coc7">
+                クトゥルフ神話TRPG 第7版
+            </option>
+
+            <option value="sw25">
+                ソード・ワールド2.5
+            </option>
+
+            <option value="dx3">
+                ダブルクロス3rd
+            </option>
+
+            <option value="shinobigami">
+                シノビガミ
+            </option>
+
+            <option value="emoklore">
+                エモクロア
+            </option>
+
+        </select>
+
+    </section>
+
+
+    <!-- 出目 -->
+    <section id="result">
+
+        <h2>結果</h2>
+
+        <div id="diceArea">
+
+            ダイスがここに表示されます
+
+        </div>
+
+        <div id="modifierArea"></div>
+
+        <div id="totalArea"></div>
+
+        <div id="judgeArea"></div>
+
+    </section>
+
+
+    <!-- ログ -->
+    <section id="history">
+
+        <h2>ロール履歴</h2>
+
+        <div id="historyList">
+
+        </div>
+
+    </section>
+
+
+    <!-- 統計 -->
+    <section id="statistics">
+
+        <h2>統計</h2>
+
+        <div id="statisticsArea">
+
+            <p>ロール回数</p>
+
+            <p>平均値</p>
+
+            <p>最大値</p>
+
+            <p>最小値</p>
+
+        </div>
+
+    </section>
+
+
+    <!-- お気に入り -->
+    <section id="favorite">
+
+        <h2>お気に入り</h2>
+
+        <button id="saveFavorite">
+
+            現在の式を登録
+
+        </button>
+
+        <div id="favoriteList">
+
+        </div>
+
+    </section>
+
+
+    <!-- 設定 -->
+    <section id="settings">
+
+        <h2>設定</h2>
+
+        <label>
+
+            <input
+                type="checkbox"
+                id="darkMode"
+                checked>
+
+            ダークモード
+
+        </label>
+
+        <br>
+
+        <label>
+
+            <input
+                type="checkbox"
+                id="animation"
+                checked>
+
+            アニメーション
+
+        </label>
+
+    </section>
+
+</main>
+
+<footer>
+
+    <p>
+
+        TRPG Dice Tool
+
+    </p>
+
+</footer>
+
+<script src="js/parser.js"></script>
+<script src="js/dice.js"></script>
+<script src="js/systems.js"></script>
+<script src="js/history.js"></script>
+<script src="js/statistics.js"></script>
+<script src="js/animation.js"></script>
+<script src="js/storage.js"></script>
+<script src="script.js"></script>
+
+</body>
+
+</html>
