@@ -1,0 +1,460 @@
+```css
+/* ===========================
+   基本設定
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:
+    "Yu Gothic",
+    "Meiryo",
+    sans-serif;
+
+    background:#1f2125;
+    color:#f5f5f5;
+
+    min-height:100vh;
+
+}
+
+/* ===========================
+   ヘッダー
+=========================== */
+
+header{
+
+    background:#2c3038;
+
+    padding:20px;
+
+    text-align:center;
+
+    font-size:30px;
+
+    border-bottom:3px solid #444;
+
+}
+
+header h1{
+
+    color:#ffd54f;
+
+}
+
+/* ===========================
+   メイン
+=========================== */
+
+main{
+
+    width:95%;
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:20px;
+
+}
+
+/* ===========================
+   各セクション
+=========================== */
+
+section{
+
+    background:#2d3138;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 0 10px rgba(0,0,0,.3);
+
+}
+
+section h2{
+
+    margin-bottom:15px;
+
+    color:#4fc3f7;
+
+}
+
+/* ===========================
+   入力欄
+=========================== */
+
+.input-group{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    align-items:center;
+
+}
+
+input[type=text]{
+
+    flex:1;
+
+    min-width:220px;
+
+    padding:10px;
+
+    font-size:18px;
+
+    border-radius:8px;
+
+    border:none;
+
+    outline:none;
+
+}
+
+select{
+
+    width:100%;
+
+    padding:10px;
+
+    font-size:16px;
+
+    border-radius:8px;
+
+    border:none;
+
+}
+
+/* ===========================
+   ボタン
+=========================== */
+
+button{
+
+    padding:10px 20px;
+
+    border:none;
+
+    border-radius:8px;
+
+    background:#1976d2;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.2s;
+
+}
+
+button:hover{
+
+    background:#2196f3;
+
+    transform:scale(1.05);
+
+}
+
+button:active{
+
+    transform:scale(.95);
+
+}
+
+/* ===========================
+   出目
+=========================== */
+
+#diceArea{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+}
+
+/* ダイス */
+
+.dice{
+
+    width:60px;
+
+    height:60px;
+
+    background:#424242;
+
+    border-radius:10px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+/* 最大値 */
+
+.max{
+
+    background:#FFD700;
+
+    color:black;
+
+}
+
+/* 1 */
+
+.min{
+
+    background:#e53935;
+
+}
+
+/* 通常 */
+
+.normal{
+
+    background:#616161;
+
+}
+
+/* ===========================
+   判定表示
+=========================== */
+
+#judgeArea{
+
+    font-size:28px;
+
+    text-align:center;
+
+    margin-top:20px;
+
+    font-weight:bold;
+
+}
+
+/* ===========================
+   合計
+=========================== */
+
+#totalArea{
+
+    font-size:26px;
+
+    margin-top:10px;
+
+    text-align:center;
+
+}
+
+/* ===========================
+   履歴
+=========================== */
+
+#historyList{
+
+    max-height:300px;
+
+    overflow-y:auto;
+
+}
+
+.history-item{
+
+    padding:10px;
+
+    margin-bottom:8px;
+
+    border-radius:8px;
+
+    background:#3a3d43;
+
+}
+
+/* ===========================
+   お気に入り
+=========================== */
+
+.favorite-item{
+
+    margin:5px 0;
+
+    padding:10px;
+
+    background:#444;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+.favorite-item:hover{
+
+    background:#555;
+
+}
+
+/* ===========================
+   統計
+=========================== */
+
+#statisticsArea{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:10px;
+
+}
+
+.stat-card{
+
+    background:#3a3d43;
+
+    padding:15px;
+
+    border-radius:8px;
+
+    text-align:center;
+
+}
+
+/* ===========================
+   フッター
+=========================== */
+
+footer{
+
+    text-align:center;
+
+    padding:20px;
+
+    color:#aaa;
+
+}
+
+/* ===========================
+   アニメーション
+=========================== */
+
+@keyframes shake{
+
+0%{
+
+transform:rotate(0deg);
+
+}
+
+20%{
+
+transform:rotate(-15deg);
+
+}
+
+40%{
+
+transform:rotate(15deg);
+
+}
+
+60%{
+
+transform:rotate(-15deg);
+
+}
+
+80%{
+
+transform:rotate(15deg);
+
+}
+
+100%{
+
+transform:rotate(0deg);
+
+}
+
+}
+
+.rollAnimation{
+
+    animation:shake .6s;
+
+}
+
+/* ===========================
+   レスポンシブ
+=========================== */
+
+@media(max-width:768px){
+
+header{
+
+font-size:22px;
+
+}
+
+.input-group{
+
+flex-direction:column;
+
+}
+
+button{
+
+width:100%;
+
+}
+
+input[type=text]{
+
+width:100%;
+
+}
+
+#statisticsArea{
+
+grid-template-columns:1fr;
+
+}
+
+.dice{
+
+width:50px;
+
+height:50px;
+
+font-size:20px;
+
+}
+
+}
+```
