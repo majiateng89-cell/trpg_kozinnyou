@@ -181,4 +181,4 @@ class DiceEngine {
 =========================================
 */
 
-const diceEngine = new DiceEngine();
+this.engine = new DiceEngine();
