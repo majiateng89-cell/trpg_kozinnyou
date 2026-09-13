@@ -226,6 +226,31 @@ button:active{
     font-weight: bold;
 }
 
+/* ダイスの状態ごとの色 */
+.dice-critical {
+    color: red;
+    border-color: red;
+    background-color: #ffe5e5;
+}
+
+.dice-fumble {
+    color: darkred;
+    border-color: darkred;
+    background-color: #ffcccc;
+}
+
+.dice-success {
+    color: green;
+    border-color: green;
+    background-color: #e5ffe5;
+}
+
+.dice-failure {
+    color: orange;
+    border-color: orange;
+    background-color: #fff0d5;
+}
+
 /* アニメーション */
 .dice-animation {
     animation: diceRoll 0.5s ease;
