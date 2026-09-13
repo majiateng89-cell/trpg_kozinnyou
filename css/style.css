@@ -459,33 +459,34 @@ font-size:20px;
 }
 
 /* 判定結果の色 */
-.judge-critical {
-    color: #b00020;
+
+#judgeArea.judge-critical {
+    color: red;
     font-weight: bold;
 }
 
-.judge-extreme {
-    color: #8e24aa;
+#judgeArea.judge-extreme {
+    color: purple;
     font-weight: bold;
 }
 
-.judge-hard {
-    color: #1976d2;
+#judgeArea.judge-hard {
+    color: blue;
     font-weight: bold;
 }
 
-.judge-regular {
-    color: #2e7d32;
+#judgeArea.judge-regular {
+    color: green;
     font-weight: bold;
 }
 
-.judge-failure {
-    color: #ef6c00;
+#judgeArea.judge-failure {
+    color: orange;
     font-weight: bold;
 }
 
-.judge-fumble {
-    color: #d32f2f;
+#judgeArea.judge-fumble {
+    color: darkred;
     font-weight: bold;
 }
 ```
