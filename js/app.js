@@ -182,109 +182,109 @@ function rollDice() {
 
 function displayResult(result) {
 
+    // ダイス表示
     diceArea.innerHTML = result.dice
-    .map(dice => {
+        .map(dice => {
 
-        let className = "dice";
+            let className = "dice";
 
-        // アニメーションがONの場合だけクラスを追加
-        if (animationCheckbox.checked) {
-            className += " dice-animation";
-        }
+            // アニメーションのON/OFF
+            if (
+                animationCheckbox &&
+                animationCheckbox.checked
+            ) {
+                className += " dice-animation";
+            }
 
-        // 通常ロールの色分け
-        if (dice.isMax) {
-            className += " dice-critical";
-        } else if (dice.isMin) {
-            className += " dice-fumble";
-        }
+            // CoC第7版の色分け
+            if (result.systemResult) {
 
-        return `
-            <span class="${className}">
-                ${dice.value}
-            </span>
-        `;
-    })
-    .join("");
+                const judgeType =
+                    result.systemResult.type;
 
-    for (const dice of result.dice) {
+                if (judgeType === "critical") {
+                    className += " dice-critical";
 
-        const diceElement =
-            document.createElement("span");
+                } else if (judgeType === "fumble") {
+                    className += " dice-fumble";
 
-        diceElement.classList.add("dice");
+                } else if (
+                    result.systemResult.success
+                ) {
+                    className += " dice-success";
 
-        diceElement.textContent =
-            dice.signedValue;
+                } else {
+                    className += " dice-failure";
+                }
 
-        if (dice.isMax) {
-            diceElement.classList.add("max");
-        }
+            } else {
 
-        if (dice.isMin) {
-            diceElement.classList.add("min");
-        }
+                // 通常ロールの色分け
+                if (dice.isMax) {
+                    className += " dice-critical";
 
-        diceArea.appendChild(diceElement);
+                } else if (dice.isMin) {
+                    className += " dice-fumble";
+                }
+            }
 
-    }
+            return `
+                <span class="${className}">
+                    ${dice.value}
+                </span>
+            `;
+        })
+        .join("");
 
+
+    // 修正値を表示
     modifierArea.textContent =
-        `修正値: ${result.modifier}`;
+        `修正値：${result.modifier}`;
 
+
+    // 合計値を表示
     totalArea.textContent =
-        `合計: ${result.total}`;
+        `合計：${result.total}`;
 
-    if (result.isCritical) {
+
+    // 判定結果を表示
+    judgeArea.className = "";
+
+    if (result.systemResult) {
+
+        const judge =
+            result.systemResult;
+
+        judgeArea.textContent =
+            `判定結果：${judge.label}`;
+
+        judgeArea.classList.add(
+            `judge-${judge.type}`
+        );
+
+    } else if (result.isCritical) {
 
         judgeArea.textContent =
             "クリティカル";
+
+        judgeArea.classList.add(
+            "judge-critical"
+        );
 
     } else if (result.isFumble) {
 
         judgeArea.textContent =
             "ファンブル";
 
+        judgeArea.classList.add(
+            "judge-fumble"
+        );
+
     } else {
 
-        judgeArea.textContent =
-            "";
-
+        judgeArea.textContent = "";
     }
-
-    if (result.systemResult) {
-
-    const judge = result.systemResult;
-
-    judgeArea.textContent =
-        `判定結果：${judge.label}`;
-
-    // いったん既存のクラスを削除
-    judgeArea.className = "";
-
-    // 判定結果に応じたクラスを追加
-    judgeArea.classList.add(
-        `judge-${judge.type}`
-    );
-
-} else if (result.isCritical) {
-
-    judgeArea.textContent = "クリティカル";
-    judgeArea.className = "judge-critical";
-
-} else if (result.isFumble) {
-
-    judgeArea.textContent = "ファンブル";
-    judgeArea.className = "judge-fumble";
-
-} else {
-
-    judgeArea.textContent = "";
-    judgeArea.className = "";
 }
-
-}
-
 
 /*
 =========================================
