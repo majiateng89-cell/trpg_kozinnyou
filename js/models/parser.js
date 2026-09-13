@@ -1,122 +1,84 @@
 /*
 =========================================
- parser.js
- ダイス記法解析
+Parser.js
 =========================================
 */
 
-class DiceParser {
+import {Tokenizer} from "./Tokenizer.js";
+import {Validator} from "./Validator.js";
+import {RollToken} from "./RollToken.js";
 
-    constructor() {
+export class Parser{
 
-        // 最大ダイス数
-        this.maxDice = 1000;
+    constructor(){
 
-        // 最大面数
-        this.maxSides = 1000;
+        this.tokenizer =
+            new Tokenizer();
+
+        this.validator =
+            new Validator();
 
     }
 
-    /**
-     * ダイス式を解析する
-     * @param {string} text
-     * @returns {Object}
-     */
-    parse(text) {
+    parse(text){
 
-        if (!text)
-            throw new Error("入力してください。");
+        const rawTokens =
+            this.tokenizer.tokenize(text);
 
-        // 空白削除
-        text = text.replace(/\s+/g, "");
+        this.validator.validate(rawTokens);
 
-        // d6 → 1d6
-        text = text.replace(/(^|[+\-])d/gi, "$11d");
+        const tokens=[];
 
-        // 先頭が+や-で始まらないなら+
-        if (!/^[+\-]/.test(text))
-            text = "+" + text;
+        for(const raw of rawTokens){
 
-        const regex = /([+\-])(\d*d\d+|\d+)/gi;
+            const sign =
+                raw.sign==="-" ? -1 : 1;
 
-        const tokens = [];
+            if(raw.value.includes("d")){
 
-        let match;
+                const parts =
+                    raw.value.split("d");
 
-        while ((match = regex.exec(text)) !== null) {
+                tokens.push(
 
-            const sign = match[1] === "-" ? -1 : 1;
+                    new RollToken({
 
-            const value = match[2];
+                        type:"dice",
 
-            if (value.includes("d")) {
+                        sign:sign,
 
-                const parts = value.split("d");
+                        count:Number(parts[0]),
 
-                const count = parseInt(parts[0]);
+                        sides:Number(parts[1])
 
-                const sides = parseInt(parts[1]);
+                    })
 
-                if (count < 1)
-                    throw new Error("ダイス数が不正です");
-
-                if (count > this.maxDice)
-                    throw new Error("ダイス数が多すぎます");
-
-                if (sides < 2)
-                    throw new Error("面数は2以上です");
-
-                if (sides > this.maxSides)
-                    throw new Error("面数が大きすぎます");
-
-                tokens.push({
-
-                    type: "dice",
-
-                    sign,
-
-                    count,
-
-                    sides
-
-                });
+                );
 
             }
 
-            else {
+            else{
 
-                tokens.push({
+                tokens.push(
 
-                    type: "number",
+                    new RollToken({
 
-                    sign,
+                        type:"number",
 
-                    value: parseInt(value)
+                        sign:sign,
 
-                });
+                        value:Number(raw.value)
+
+                    })
+
+                );
 
             }
 
         }
 
-        return {
-
-            original: text,
-
-            tokens
-
-        };
+        return tokens;
 
     }
-
-}
-
-/*
-=========================================
- グローバル生成
-=========================================
-*/
-
-class DiceParser {
 
 }
