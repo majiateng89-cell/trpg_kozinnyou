@@ -1,55 +1,104 @@
 /*
 =========================================
 Parser.js
+ダイス記法解析サービス
 =========================================
 */
 
-import {Tokenizer} from "./Tokenizer.js";
-import {Validator} from "./Validator.js";
-import {RollToken} from "./RollToken.js";
+import { Tokenizer } from "./Tokenizer.js";
 
-export class Parser{
+import { Validator } from "./Validator.js";
 
-    constructor(){
+import { RollToken } from "./RollToken.js";
 
-        this.tokenizer =
-            new Tokenizer();
+import { ParseResult } from "../../entities/ParseResult.js";
 
-        this.validator =
-            new Validator();
+
+export class Parser {
+
+    constructor() {
+
+        this.tokenizer = new Tokenizer();
+
+        this.validator = new Validator();
 
     }
 
-    parse(text){
+    /**
+     * ダイス記法を解析する
+     *
+     * @param {string} text
+     * @returns {ParseResult}
+     */
+
+    parse(text) {
+
+        if (typeof text !== "string") {
+
+            throw new Error("文字列を入力してください。");
+
+        }
+
+        const originalText = text;
+
+        /*
+        ------------------------------
+        Tokenizer
+        ------------------------------
+        */
 
         const rawTokens =
             this.tokenizer.tokenize(text);
 
+        /*
+        ------------------------------
+        Validator
+        ------------------------------
+        */
+
         this.validator.validate(rawTokens);
 
-        const tokens=[];
+        /*
+        ------------------------------
+        RollToken生成
+        ------------------------------
+        */
 
-        for(const raw of rawTokens){
+        const tokens = [];
+
+        for (const raw of rawTokens) {
 
             const sign =
-                raw.sign==="-" ? -1 : 1;
+                raw.sign === "-" ? -1 : 1;
 
-            if(raw.value.includes("d")){
+            const value =
+                raw.value.toLowerCase();
 
-                const parts =
-                    raw.value.split("d");
+            /*
+            --------------------------
+            ダイス
+            --------------------------
+            */
+
+            if (value.includes("d")) {
+
+                const parts = value.split("d");
+
+                const count = Number(parts[0]);
+
+                const sides = Number(parts[1]);
 
                 tokens.push(
 
                     new RollToken({
 
-                        type:"dice",
+                        type: "dice",
 
-                        sign:sign,
+                        sign: sign,
 
-                        count:Number(parts[0]),
+                        count: count,
 
-                        sides:Number(parts[1])
+                        sides: sides
 
                     })
 
@@ -57,17 +106,23 @@ export class Parser{
 
             }
 
-            else{
+            /*
+            --------------------------
+            固定値
+            --------------------------
+            */
+
+            else {
 
                 tokens.push(
 
                     new RollToken({
 
-                        type:"number",
+                        type: "number",
 
-                        sign:sign,
+                        sign: sign,
 
-                        value:Number(raw.value)
+                        value: Number(value)
 
                     })
 
@@ -77,7 +132,49 @@ export class Parser{
 
         }
 
-        return tokens;
+        /*
+        ------------------------------
+        正規化文字列
+        ------------------------------
+        */
+
+        const normalizedText = tokens
+            .map(token => {
+
+                const sign =
+                    token.sign === -1 ? "-" : "+";
+
+                if (token.isDice) {
+
+                    return (
+                        sign +
+                        token.count +
+                        "d" +
+                        token.sides
+                    );
+
+                }
+
+                return sign + token.value;
+
+            })
+            .join("");
+
+        /*
+        ------------------------------
+        ParseResult生成
+        ------------------------------
+        */
+
+        return new ParseResult({
+
+            originalText: originalText,
+
+            normalizedText: normalizedText,
+
+            tokens: tokens
+
+        });
 
     }
 
