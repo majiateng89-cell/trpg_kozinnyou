@@ -457,4 +457,35 @@ font-size:20px;
 }
 
 }
+
+/* 判定結果の色 */
+.judge-critical {
+    color: #b00020;
+    font-weight: bold;
+}
+
+.judge-extreme {
+    color: #8e24aa;
+    font-weight: bold;
+}
+
+.judge-hard {
+    color: #1976d2;
+    font-weight: bold;
+}
+
+.judge-regular {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.judge-failure {
+    color: #ef6c00;
+    font-weight: bold;
+}
+
+.judge-fumble {
+    color: #d32f2f;
+    font-weight: bold;
+}
 ```
