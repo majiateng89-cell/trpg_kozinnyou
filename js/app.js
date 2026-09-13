@@ -82,6 +82,9 @@ const skillValueInput =
 const coc7Area =
     document.getElementById("coc7Area");
 
+const animationCheckbox =
+    document.getElementById("animation");
+
 /*
 =========================================
 ゲームシステムの表示切り替え
@@ -179,7 +182,30 @@ function rollDice() {
 
 function displayResult(result) {
 
-    diceArea.innerHTML = "";
+    diceArea.innerHTML = result.dice
+    .map(dice => {
+
+        let className = "dice";
+
+        // アニメーションがONの場合だけクラスを追加
+        if (animationCheckbox.checked) {
+            className += " dice-animation";
+        }
+
+        // 通常ロールの色分け
+        if (dice.isMax) {
+            className += " dice-critical";
+        } else if (dice.isMin) {
+            className += " dice-fumble";
+        }
+
+        return `
+            <span class="${className}">
+                ${dice.value}
+            </span>
+        `;
+    })
+    .join("");
 
     for (const dice of result.dice) {
 
