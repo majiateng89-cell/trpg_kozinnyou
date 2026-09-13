@@ -984,11 +984,6 @@ if (saveSkillButton) {
 =========================================
 */
 
-displayHistory();
-
-displayFavorites();
-
-updateGameSystemDisplay();
 
 history = loadHistory();
 
