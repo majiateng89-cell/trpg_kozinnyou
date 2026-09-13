@@ -59,6 +59,9 @@ const judgeArea =
 const historyList =
     document.getElementById("historyList");
 
+const clearHistoryButton =
+    document.getElementById("clearHistoryButton");
+
 
 /*
 =========================================
@@ -372,6 +375,10 @@ rollButton.addEventListener(
     rollDice
 );
 
+clearHistoryButton.addEventListener(
+    "click",
+    clearHistory
+);
 
 /*
 =========================================
