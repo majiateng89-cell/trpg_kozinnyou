@@ -268,8 +268,89 @@ function displayHistory() {
 
     }
 
+    displayStatistics();
+
 }
 
+/*
+=========================================
+統計情報を表示
+=========================================
+*/
+
+function displayStatistics() {
+
+    statisticsArea.innerHTML = "";
+
+    if (history.length === 0) {
+
+        statisticsArea.textContent =
+            "まだ統計情報がありません。";
+
+        return;
+
+    }
+
+    /*
+    -----------------------------
+    基本データの集計
+    -----------------------------
+    */
+
+    const rollCount =
+        history.length;
+
+    /*
+    -----------------------------
+    クリティカル・ファンブル数
+    -----------------------------
+    */
+
+    const criticalCount =
+        history.filter(
+            item => item.isCritical
+        ).length;
+
+    const fumbleCount =
+        history.filter(
+            item => item.isFumble
+        ).length;
+
+    /*
+    -----------------------------
+    表示する統計情報
+    -----------------------------
+    */
+
+    const statisticsList =
+        document.createElement("ul");
+
+    const statistics = [
+
+        `ロール回数: ${rollCount}回`,
+
+        `クリティカル回数: ${criticalCount}回`,
+
+        `ファンブル回数: ${fumbleCount}回`
+
+    ];
+
+    for (const text of statistics) {
+
+        const item =
+            document.createElement("li");
+
+        item.textContent = text;
+
+        statisticsList.appendChild(item);
+
+    }
+
+    statisticsArea.appendChild(
+        statisticsList
+    );
+
+}
 
 /*
 =========================================
