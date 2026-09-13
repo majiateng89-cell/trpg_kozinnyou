@@ -216,6 +216,37 @@ button:active{
 
 }
 
+/* ダイスの基本表示 */
+.dice {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 4px;
+    border: 2px solid;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* アニメーション */
+.dice-animation {
+    animation: diceRoll 0.5s ease;
+}
+
+@keyframes diceRoll {
+    0% {
+        transform: rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.2);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 1;
+    }
+}
 /* 最大値 */
 
 .max{
