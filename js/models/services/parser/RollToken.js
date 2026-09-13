@@ -1,4 +1,11 @@
-export class RollToken{
+/*
+=========================================
+RollToken.js
+Parserが生成するトークン
+=========================================
+*/
+
+export class RollToken {
 
     constructor({
 
@@ -6,25 +13,37 @@ export class RollToken{
 
         sign,
 
-        value=null,
+        value = null,
 
-        count=null,
+        count = null,
 
-        sides=null
+        sides = null
 
-    }){
+    }) {
 
-        this.type=type;
+        this.type = type;
 
-        this.sign=sign;
+        this.sign = sign;
 
-        this.value=value;
+        this.value = value;
 
-        this.count=count;
+        this.count = count;
 
-        this.sides=sides;
+        this.sides = sides;
 
         Object.freeze(this);
+
+    }
+
+    get isDice() {
+
+        return this.type === "dice";
+
+    }
+
+    get isNumber() {
+
+        return this.type === "number";
 
     }
 
