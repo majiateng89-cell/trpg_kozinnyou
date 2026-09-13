@@ -40,11 +40,6 @@ let history = loadHistory();
 const SKILL_STORAGE_KEY =
     "trpgDiceSkills";
 
-let history = [];
-
-let favorites = [];
-
-let savedSkills = [];
 
 /*
 =========================================
