@@ -37,12 +37,6 @@ let history = loadHistory();
 // 保存データ
 // =========================================
 
-const HISTORY_STORAGE_KEY =
-    "trpgDiceHistory";
-
-const FAVORITE_STORAGE_KEY =
-    "trpgDiceFavorites";
-
 const SKILL_STORAGE_KEY =
     "trpgDiceSkills";
 
