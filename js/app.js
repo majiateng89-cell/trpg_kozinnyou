@@ -62,6 +62,9 @@ const historyList =
 const clearHistoryButton =
     document.getElementById("clearHistoryButton");
 
+const statisticsArea =
+    document.getElementById("statisticsArea");
+
 
 /*
 =========================================
