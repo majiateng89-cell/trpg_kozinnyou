@@ -121,6 +121,39 @@ function rollDice() {
         const result =
             diceEngine.roll(parseResult);
 
+        if (gameSystemSelect.value === "coc7") {
+
+            const skillValue =
+            Number(skillValueInput.value);
+
+            const d100Dice =
+            result.dice.find(
+                dice => dice.sides === 100
+            );
+
+        if (!d100Dice) {
+
+            throw new Error(
+                "CoC第7版では1d100を使用してください。"
+            );
+
+        }
+
+        const judgeResult =
+            coc7Judge.judge(
+                d100Dice.value,
+                skillValue
+        );
+
+        result.systemResult =
+            judgeResult;
+
+        judgeArea.textContent =
+            `${judgeResult.label} ` +
+            `（技能値: ${skillValue}、出目: ${d100Dice.value}）`;
+
+        }
+
         displayResult(result);
 
         addHistory(result);
