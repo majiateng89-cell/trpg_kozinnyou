@@ -728,6 +728,11 @@ saveFavoriteButton.addEventListener(
     addFavorite
 );
 
+gameSystemSelect.addEventListener(
+    "change",
+    updateGameSystemDisplay
+);
+
 /*
 =========================================
 初期表示
@@ -737,3 +742,5 @@ saveFavoriteButton.addEventListener(
 displayHistory();
 
 displayFavorites();
+
+updateGameSystemDisplay();
