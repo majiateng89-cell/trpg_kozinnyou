@@ -25,9 +25,11 @@ const diceEngine = new DiceEngine();
 =========================================
 */
 
-const history = [];
+const STORAGE_KEY = "trpgDiceHistory";
 
 const MAX_HISTORY_COUNT = 20;
+
+let history = loadHistory();
 
 
 /*
@@ -71,45 +73,15 @@ function rollDice() {
         const notation =
             diceNotationInput.value;
 
-        /*
-        -----------------------------
-        ダイス記法を解析
-        -----------------------------
-        */
-
         const parseResult =
             parser.parse(notation);
-
-        /*
-        -----------------------------
-        ダイスを振る
-        -----------------------------
-        */
 
         const result =
             diceEngine.roll(parseResult);
 
-        /*
-        -----------------------------
-        結果を表示
-        -----------------------------
-        */
-
         displayResult(result);
 
-        /*
-        -----------------------------
-        履歴に追加
-        -----------------------------
-        */
-
         addHistory(result);
-
-        /*
-        -----------------------------
-        履歴を表示
-        -----------------------------
-        */
 
         displayHistory();
 
@@ -126,17 +98,11 @@ function rollDice() {
 
 /*
 =========================================
-結果を画面に表示
+現在の結果を表示
 =========================================
 */
 
 function displayResult(result) {
-
-    /*
-    -----------------------------
-    ダイスの出目を表示
-    -----------------------------
-    */
 
     diceArea.innerHTML = "";
 
@@ -162,32 +128,11 @@ function displayResult(result) {
 
     }
 
-
-    /*
-    -----------------------------
-    修正値を表示
-    -----------------------------
-    */
-
     modifierArea.textContent =
         `修正値: ${result.modifier}`;
 
-
-    /*
-    -----------------------------
-    合計値を表示
-    -----------------------------
-    */
-
     totalArea.textContent =
         `合計: ${result.total}`;
-
-
-    /*
-    -----------------------------
-    クリティカル・ファンブル判定
-    -----------------------------
-    */
 
     if (result.isCritical) {
 
@@ -217,18 +162,35 @@ function displayResult(result) {
 
 function addHistory(result) {
 
-    history.unshift(result);
+    const historyData = {
 
-    /*
-    履歴が20件を超えた場合、
-    古い履歴から削除する
-    */
+        formula: result.formula,
+
+        timestamp: result.timestamp.toISOString(),
+
+        diceValues: result.dice.map(
+            dice => dice.signedValue
+        ),
+
+        modifier: result.modifier,
+
+        total: result.total,
+
+        isCritical: result.isCritical,
+
+        isFumble: result.isFumble
+
+    };
+
+    history.unshift(historyData);
 
     if (history.length > MAX_HISTORY_COUNT) {
 
         history.pop();
 
     }
+
+    saveHistory();
 
 }
 
@@ -257,18 +219,16 @@ function displayHistory() {
 
     }
 
-    for (const result of history) {
+    for (const item of history) {
 
         const historyItem =
             document.createElement("li");
 
-        const diceValues =
-            result.dice
-                .map(dice => dice.signedValue)
-                .join(", ");
+        const date =
+            new Date(item.timestamp);
 
         const time =
-            result.timestamp.toLocaleTimeString(
+            date.toLocaleTimeString(
                 "ja-JP",
                 {
                     hour: "2-digit",
@@ -277,18 +237,21 @@ function displayHistory() {
                 }
             );
 
-        historyItem.textContent =
-            `${time}｜${result.formula}｜` +
-            `出目: [${diceValues}]｜` +
-            `修正値: ${result.modifier}｜` +
-            `合計: ${result.total}`;
+        const diceValues =
+            item.diceValues.join(", ");
 
-        if (result.isCritical) {
+        historyItem.textContent =
+            `${time}｜${item.formula}｜` +
+            `出目: [${diceValues}]｜` +
+            `修正値: ${item.modifier}｜` +
+            `合計: ${item.total}`;
+
+        if (item.isCritical) {
 
             historyItem.textContent +=
                 "｜クリティカル";
 
-        } else if (result.isFumble) {
+        } else if (item.isFumble) {
 
             historyItem.textContent +=
                 "｜ファンブル";
@@ -298,6 +261,83 @@ function displayHistory() {
         historyList.appendChild(historyItem);
 
     }
+
+}
+
+
+/*
+=========================================
+履歴をlocalStorageへ保存
+=========================================
+*/
+
+function saveHistory() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(history)
+    );
+
+}
+
+
+/*
+=========================================
+localStorageから履歴を読み込む
+=========================================
+*/
+
+function loadHistory() {
+
+    const savedHistory =
+        localStorage.getItem(STORAGE_KEY);
+
+    if (!savedHistory) {
+
+        return [];
+
+    }
+
+    try {
+
+        const parsedHistory =
+            JSON.parse(savedHistory);
+
+        if (!Array.isArray(parsedHistory)) {
+
+            return [];
+
+        }
+
+        return parsedHistory;
+
+    } catch (error) {
+
+        console.error(
+            "履歴の読み込みに失敗しました。",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+/*
+=========================================
+履歴をすべて削除
+=========================================
+*/
+
+function clearHistory() {
+
+    history = [];
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    displayHistory();
 
 }
 
@@ -323,7 +363,7 @@ function clearResult() {
 
 /*
 =========================================
-ボタンイベントの登録
+イベント登録
 =========================================
 */
 
@@ -331,3 +371,12 @@ rollButton.addEventListener(
     "click",
     rollDice
 );
+
+
+/*
+=========================================
+初期表示
+=========================================
+*/
+
+displayHistory();
