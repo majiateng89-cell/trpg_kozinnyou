@@ -65,6 +65,11 @@ const clearHistoryButton =
 const statisticsArea =
     document.getElementById("statisticsArea");
 
+const saveFavoriteButton =
+    document.getElementById("saveFavorite");
+
+const favoriteList =
+    document.getElementById("favoriteList");
 
 /*
 =========================================
@@ -447,6 +452,229 @@ function clearResult() {
 
 }
 
+/*
+=========================================
+お気に入り管理
+=========================================
+*/
+
+const FAVORITE_STORAGE_KEY =
+    "trpgDiceFavorites";
+
+const DEFAULT_FAVORITES = [
+    "1d100",
+    "1d6",
+    "2d100",
+    "2d6"
+];
+
+let favorites = loadFavorites();
+
+/*
+=========================================
+お気に入りを保存
+=========================================
+*/
+
+function saveFavorites() {
+
+    localStorage.setItem(
+        FAVORITE_STORAGE_KEY,
+        JSON.stringify(favorites)
+    );
+
+}
+
+/*
+=========================================
+お気に入りを読み込む
+=========================================
+*/
+
+function loadFavorites() {
+
+    const savedFavorites =
+        localStorage.getItem(
+            FAVORITE_STORAGE_KEY
+        );
+
+    if (!savedFavorites) {
+
+        return [...DEFAULT_FAVORITES];
+
+    }
+
+    try {
+
+        const parsedFavorites =
+            JSON.parse(savedFavorites);
+
+        if (!Array.isArray(parsedFavorites)) {
+
+            return [...DEFAULT_FAVORITES];
+
+        }
+
+        return parsedFavorites;
+
+    } catch (error) {
+
+        console.error(
+            "お気に入りの読み込みに失敗しました。",
+            error
+        );
+
+        return [...DEFAULT_FAVORITES];
+
+    }
+
+}
+
+/*
+=========================================
+お気に入りを表示
+=========================================
+*/
+
+function displayFavorites() {
+
+    favoriteList.innerHTML = "";
+
+    if (favorites.length === 0) {
+
+        favoriteList.textContent =
+            "お気に入りがありません。";
+
+        return;
+
+    }
+
+    for (const favorite of favorites) {
+
+        const favoriteItem =
+            document.createElement("div");
+
+        favoriteItem.classList.add(
+            "favorite-item"
+        );
+
+        const selectButton =
+            document.createElement("button");
+
+        selectButton.textContent =
+            favorite;
+
+        selectButton.addEventListener(
+            "click",
+            () => {
+
+                diceNotationInput.value =
+                    favorite;
+
+            }
+        );
+
+        const deleteButton =
+            document.createElement("button");
+
+        deleteButton.textContent =
+            "削除";
+
+        deleteButton.addEventListener(
+            "click",
+            () => {
+
+                removeFavorite(favorite);
+
+            }
+        );
+
+        favoriteItem.appendChild(
+            selectButton
+        );
+
+        favoriteItem.appendChild(
+            deleteButton
+        );
+
+        favoriteList.appendChild(
+            favoriteItem
+        );
+
+    }
+
+}
+
+/*
+=========================================
+お気に入りを追加
+=========================================
+*/
+
+function addFavorite() {
+
+    const notation =
+        diceNotationInput.value.trim();
+
+    if (notation === "") {
+
+        alert("お気に入りに追加する記法を入力してください。");
+
+        return;
+
+    }
+
+    try {
+
+        /*
+        不正な記法を登録しないように検証する
+        */
+
+        parser.parse(notation);
+
+    } catch (error) {
+
+        alert(error.message);
+
+        return;
+
+    }
+
+    if (favorites.includes(notation)) {
+
+        alert("その記法はすでにお気に入りに登録されています。");
+
+        return;
+
+    }
+
+    favorites.push(notation);
+
+    saveFavorites();
+
+    displayFavorites();
+
+}
+
+/*
+=========================================
+お気に入りを削除
+=========================================
+*/
+
+function removeFavorite(notation) {
+
+    favorites =
+        favorites.filter(
+            favorite => favorite !== notation
+        );
+
+    saveFavorites();
+
+    displayFavorites();
+
+}
+
 
 /*
 =========================================
@@ -464,6 +692,11 @@ clearHistoryButton.addEventListener(
     clearHistory
 );
 
+saveFavoriteButton.addEventListener(
+    "click",
+    addFavorite
+);
+
 /*
 =========================================
 初期表示
@@ -471,3 +704,5 @@ clearHistoryButton.addEventListener(
 */
 
 displayHistory();
+
+displayFavorites();
