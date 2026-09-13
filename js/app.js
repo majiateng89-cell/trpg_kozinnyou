@@ -737,7 +737,7 @@ const DEFAULT_FAVORITES = [
     "2d6"
 ];
 
-let favorites = loadFavorites();
+let favorites = [];
 
 /*
 =========================================
