@@ -33,6 +33,24 @@ const MAX_HISTORY_COUNT = 20;
 
 let history = loadHistory();
 
+// =========================================
+// 保存データ
+// =========================================
+
+const HISTORY_STORAGE_KEY =
+    "trpgDiceHistory";
+
+const FAVORITE_STORAGE_KEY =
+    "trpgDiceFavorites";
+
+const SKILL_STORAGE_KEY =
+    "trpgDiceSkills";
+
+let history = [];
+
+let favorites = [];
+
+let savedSkills = [];
 
 /*
 =========================================
@@ -85,6 +103,11 @@ const coc7Area =
 const animationCheckbox =
     document.getElementById("animation");
 
+const saveSkillButton =
+    document.getElementById("saveSkillButton");
+
+const savedSkillList =
+    document.getElementById("savedSkillList");
 /*
 =========================================
 ゲームシステムの表示切り替え
@@ -396,6 +419,141 @@ function displayHistory() {
 
     displayStatistics();
 
+}
+
+/*
+=========================================
+技能値を保存する関数を追加
+=========================================
+*/
+
+function saveCurrentSkill() {
+
+    const skillValue =
+        Number(skillValueInput.value);
+
+    if (
+        !Number.isInteger(skillValue) ||
+        skillValue < 1 ||
+        skillValue > 100
+    ) {
+        alert(
+            "技能値は1～100の整数で入力してください。"
+        );
+
+        return;
+    }
+
+    if (savedSkills.includes(skillValue)) {
+
+        alert(
+            "その技能値はすでに保存されています。"
+        );
+
+        return;
+    }
+
+    savedSkills.push(skillValue);
+
+    saveSkills();
+
+    displaySavedSkills();
+}
+
+/*
+=========================================
+技能値を保存する関数
+=========================================
+*/
+
+function saveSkills() {
+
+    localStorage.setItem(
+        SKILL_STORAGE_KEY,
+        JSON.stringify(savedSkills)
+    );
+}
+
+/*
+=========================================
+保存した技能値を画面に表示
+=========================================
+*/
+
+function displaySavedSkills() {
+
+    if (!savedSkillList) {
+        return;
+    }
+
+    savedSkillList.innerHTML = "";
+
+    if (savedSkills.length === 0) {
+
+        savedSkillList.textContent =
+            "保存された技能値はありません。";
+
+        return;
+    }
+
+    savedSkills.forEach(skillValue => {
+
+        const container =
+            document.createElement("span");
+
+        const useButton =
+            document.createElement("button");
+
+        useButton.textContent =
+            `技能値 ${skillValue}`;
+
+        useButton.addEventListener(
+            "click",
+            () => {
+
+                skillValueInput.value =
+                    skillValue;
+            }
+        );
+
+
+        const deleteButton =
+            document.createElement("button");
+
+        deleteButton.textContent =
+            "削除";
+
+        deleteButton.addEventListener(
+            "click",
+            () => {
+
+                removeSkill(skillValue);
+            }
+        );
+
+        container.appendChild(useButton);
+        container.appendChild(deleteButton);
+
+        savedSkillList.appendChild(container);
+    });
+}
+
+/*
+=========================================
+保存した技能値を削除する関数
+=========================================
+*/
+
+function removeSkill(skillValue) {
+
+    savedSkills =
+        savedSkills.filter(
+            value => value !== skillValue
+        );
+
+    saveSkills();
+
+    displaySavedSkills();
 }
 
 /*
@@ -823,6 +981,13 @@ gameSystemSelect.addEventListener(
     updateGameSystemDisplay
 );
 
+if (saveSkillButton) {
+    saveSkillButton.addEventListener(
+        "click",
+        saveCurrentSkill
+    );
+}
+
 /*
 =========================================
 初期表示
@@ -834,3 +999,18 @@ displayHistory();
 displayFavorites();
 
 updateGameSystemDisplay();
+
+history = loadHistory();
+
+favorites = loadFavorites();
+
+savedSkills = loadSkills();
+
+displayHistory();
+
+displayFavorites();
+
+displaySavedSkills();
+
+updateGameSystemDisplay();
+
