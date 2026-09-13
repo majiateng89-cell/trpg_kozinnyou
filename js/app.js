@@ -226,6 +226,37 @@ function displayResult(result) {
 
     }
 
+    if (result.systemResult) {
+
+    const judge = result.systemResult;
+
+    judgeArea.textContent =
+        `判定結果：${judge.label}`;
+
+    // いったん既存のクラスを削除
+    judgeArea.className = "";
+
+    // 判定結果に応じたクラスを追加
+    judgeArea.classList.add(
+        `judge-${judge.type}`
+    );
+
+} else if (result.isCritical) {
+
+    judgeArea.textContent = "クリティカル";
+    judgeArea.className = "judge-critical";
+
+} else if (result.isFumble) {
+
+    judgeArea.textContent = "ファンブル";
+    judgeArea.className = "judge-fumble";
+
+} else {
+
+    judgeArea.textContent = "";
+    judgeArea.className = "";
+}
+
 }
 
 
