@@ -7,6 +7,7 @@ app.js
 
 import { Parser } from "./models/services/parser/Parser.js";
 import { DiceEngine } from "./models/services/DiceEngine.js";
+import { CoC7Judge } from "./models/services/CoC7Judge.js";
 
 
 /*
@@ -17,6 +18,7 @@ import { DiceEngine } from "./models/services/DiceEngine.js";
 
 const parser = new Parser();
 const diceEngine = new DiceEngine();
+const coc7Judge = new CoC7Judge();
 
 
 /*
@@ -70,6 +72,35 @@ const saveFavoriteButton =
 
 const favoriteList =
     document.getElementById("favoriteList");
+
+const gameSystemSelect =
+    document.getElementById("gameSystem");
+
+const skillValueInput =
+    document.getElementById("skillValue");
+
+const coc7Area =
+    document.getElementById("coc7Area");
+
+/*
+=========================================
+ゲームシステムの表示切り替え
+=========================================
+*/
+
+function updateGameSystemDisplay() {
+
+    if (gameSystemSelect.value === "coc7") {
+
+        coc7Area.style.display = "block";
+
+    } else {
+
+        coc7Area.style.display = "none";
+
+    }
+
+}
 
 /*
 =========================================
