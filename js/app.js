@@ -993,15 +993,15 @@ if (saveSkillButton) {
 
 history = loadHistory();
 
-favorites = loadFavorites();
-
 savedSkills = loadSkills();
 
 displayHistory();
 
-displayFavorites();
-
 displaySavedSkills();
 
 updateGameSystemDisplay();
+
+favorites = loadFavorites();
+
+displayFavorites();
 
