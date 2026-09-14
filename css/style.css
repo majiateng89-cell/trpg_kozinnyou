@@ -545,4 +545,118 @@ font-size:20px;
     color: darkred;
     font-weight: bold;
 }
+
+/* =========================================
+   スマートフォン向けレイアウト
+========================================= */
+
+@media screen and (max-width: 600px) {
+
+    body {
+        margin: 0;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    main {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    section {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 16px;
+        padding: 14px;
+    }
+
+    h1 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    /* 入力欄 */
+    input[type="text"],
+    input[type="number"],
+    select {
+        width: 100%;
+        min-height: 44px;
+        box-sizing: border-box;
+        font-size: 16px;
+        margin-top: 6px;
+        margin-bottom: 10px;
+    }
+
+    /* ボタン */
+    button {
+        min-height: 44px;
+        padding: 10px 14px;
+        font-size: 16px;
+        margin: 4px 2px;
+    }
+
+    /* ダイス表示 */
+    #diceArea {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .dice {
+        min-width: 42px;
+        min-height: 42px;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+        margin: 2px;
+        font-size: 18px;
+    }
+
+    /* 合計値・修正値 */
+    #modifierArea,
+    #totalArea,
+    #judgeArea {
+        font-size: 18px;
+        overflow-wrap: anywhere;
+    }
+
+    /* 履歴 */
+    #historyList {
+        padding-left: 0;
+        list-style: none;
+    }
+
+    #historyList li {
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
+        overflow-wrap: anywhere;
+        line-height: 1.6;
+    }
+
+    /* お気に入り・技能値 */
+    #favoriteList > div,
+    #savedSkillList > div {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+
+    /* 横幅が大きくなりすぎる文字を折り返す */
+    #favoriteList,
+    #savedSkillList,
+    #statisticsArea {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+}
 ```
