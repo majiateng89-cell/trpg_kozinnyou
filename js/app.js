@@ -98,6 +98,8 @@ const saveSkillButton =
 
 const savedSkillList =
     document.getElementById("savedSkillList");
+
+const themeToggle = document.getElementById("themeToggle");
 /*
 =========================================
 ゲームシステムの表示切り替え
@@ -994,6 +996,18 @@ function removeFavorite(notation) {
 
 }
 
+/*
+=========================================
+ダークモード実装
+=========================================
+*/
+
+const savedTheme = localStorage.getItem("trpgDiceTheme");
+
+if (savedTheme === "dark") {
+  document.body.classList.add("dark-mode");
+  themeToggle.textContent = "☀️ ライトモード";
+}
 
 /*
 =========================================
@@ -1048,3 +1062,23 @@ displayFavorites();
 displaySavedSkills();
 
 updateGameSystemDisplay();
+
+/*
+=========================================
+ボタンのクリック処理
+=========================================
+*/
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  const isDarkMode = document.body.classList.contains("dark-mode");
+
+  if (isDarkMode) {
+    themeToggle.textContent = "☀️ ライトモード";
+    localStorage.setItem("trpgDiceTheme", "dark");
+  } else {
+    themeToggle.textContent = "🌙 ダークモード";
+    localStorage.setItem("trpgDiceTheme", "light");
+  }
+});
