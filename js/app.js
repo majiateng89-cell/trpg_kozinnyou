@@ -84,9 +84,6 @@ const favoriteList =
 const gameSystemSelect =
     document.getElementById("gameSystem");
 
-const skillValueInput =
-    document.getElementById("skillValue");
-
 const coc7Area =
     document.getElementById("coc7Area");
 
