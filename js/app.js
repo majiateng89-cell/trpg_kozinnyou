@@ -767,10 +767,12 @@ function loadFavorites() {
             FAVORITE_STORAGE_KEY
         );
 
-    if (!savedFavorites) {
+    // 保存データがない場合
+    if (savedFavorites === null) {
 
-        return [...DEFAULT_FAVORITES];
-
+        return [
+            ...DEFAULT_FAVORITES
+        ];
     }
 
     try {
@@ -780,11 +782,15 @@ function loadFavorites() {
 
         if (!Array.isArray(parsedFavorites)) {
 
-            return [...DEFAULT_FAVORITES];
-
+            return [
+                ...DEFAULT_FAVORITES
+            ];
         }
 
-        return parsedFavorites;
+        // 保存済みデータをそのまま使用する
+        return [
+            ...new Set(parsedFavorites)
+        ];
 
     } catch (error) {
 
@@ -793,10 +799,10 @@ function loadFavorites() {
             error
         );
 
-        return [...DEFAULT_FAVORITES];
-
+        return [
+            ...DEFAULT_FAVORITES
+        ];
     }
-
 }
 
 /*
