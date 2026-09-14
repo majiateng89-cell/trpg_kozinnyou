@@ -100,6 +100,13 @@ const savedSkillList =
     document.getElementById("savedSkillList");
 
 const themeToggle = document.getElementById("themeToggle");
+
+const characterSelect = document.getElementById("characterSelect");
+
+const skillSelect = document.getElementById("skillSelect");
+
+const skillValueInput = document.getElementById("skillValue");
+
 /*
 =========================================
 ゲームシステムの表示切り替え
@@ -188,6 +195,154 @@ function rollDice() {
 
 }
 
+/*
+=========================================
+キャラクターデータを読み込む
+=========================================
+*/
+
+let characters = loadCharacters();
+
+function loadCharacters() {
+  try {
+    return JSON.parse(
+      localStorage.getItem("trpgCharacters") || "[]"
+    );
+  } catch (error) {
+    console.error(
+      "キャラクターデータの読み込みに失敗しました",
+      error
+    );
+
+    return [];
+  }
+}
+
+/*
+=========================================
+キャラクター選択欄を作成
+=========================================
+*/
+
+function displayCharacterOptions() {
+  characterSelect.innerHTML = "";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent =
+    "キャラクターを選択してください";
+
+  characterSelect.appendChild(defaultOption);
+
+  characters.forEach((character) => {
+    const option = document.createElement("option");
+
+    option.value = character.id;
+    option.textContent = character.name;
+
+    characterSelect.appendChild(option);
+  });
+
+  skillSelect.innerHTML = "";
+
+  const skillDefaultOption = document.createElement("option");
+  skillDefaultOption.value = "";
+  skillDefaultOption.textContent =
+    "先にキャラクターを選択してください";
+
+  skillSelect.appendChild(skillDefaultOption);
+  skillSelect.disabled = true;
+}
+
+/*
+=========================================
+選択したキャクターの技能を表示
+=========================================
+*/
+
+function displaySkillOptions() {
+  const characterId = characterSelect.value;
+
+  skillSelect.innerHTML = "";
+
+  const character = characters.find(
+    (item) => item.id === characterId
+  );
+
+  if (!character) {
+    skillSelect.disabled = true;
+
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent =
+      "先にキャラクターを選択してください";
+
+    skillSelect.appendChild(option);
+
+    skillValueInput.value = 50;
+    return;
+  }
+
+  const skills = character.skills || {};
+  const skillEntries = Object.entries(skills);
+
+  if (skillEntries.length === 0) {
+    skillSelect.disabled = true;
+
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent =
+      "登録されている技能がありません";
+
+    skillSelect.appendChild(option);
+
+    skillValueInput.value = 50;
+    return;
+  }
+
+  skillSelect.disabled = false;
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent =
+    "技能を選択してください";
+
+  skillSelect.appendChild(defaultOption);
+
+  skillEntries.forEach(([skillName, skillValue]) => {
+    const option = document.createElement("option");
+
+    option.value = skillName;
+    option.textContent =
+      `${skillName}（${skillValue}）`;
+
+    option.dataset.value = skillValue;
+
+    skillSelect.appendChild(option);
+  });
+
+  skillValueInput.value = 50;
+}
+
+/*
+=========================================
+技能を選択した時、技能値を反映
+=========================================
+*/
+
+function updateSkillValue() {
+  const selectedOption =
+    skillSelect.options[skillSelect.selectedIndex];
+
+  if (!selectedOption || !skillSelect.value) {
+    skillValueInput.value = 50;
+    return;
+  }
+
+  const skillValue = selectedOption.dataset.value;
+
+  skillValueInput.value = skillValue ?? 50;
+}
 
 /*
 =========================================
@@ -1030,6 +1185,16 @@ if (saveSkillButton) {
     );
 }
 
+characterSelect.addEventListener(
+  "change",
+  displaySkillOptions
+);
+
+skillSelect.addEventListener(
+  "change",
+  updateSkillValue
+);
+
 /*
 =========================================
 初期表示
@@ -1050,6 +1215,10 @@ displayFavorites();
 displaySavedSkills();
 
 updateGameSystemDisplay();
+
+characters = loadCharacters();
+
+displayCharacterOptions();
 
 /*
 =========================================
