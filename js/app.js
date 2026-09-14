@@ -477,7 +477,7 @@ function loadSkills() {
             SKILL_STORAGE_KEY
         );
 
-    if (!savedData) {
+    if (savedData === null) {
         return [];
     }
 
