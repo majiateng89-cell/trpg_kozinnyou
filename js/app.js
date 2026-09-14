@@ -1255,3 +1255,18 @@ themeToggle.addEventListener("click", () => {
     localStorage.setItem("trpgDiceTheme", "light");
   }
 });
+
+/*
+=========================================
+キャラシ更新ボタン
+=========================================
+*/
+
+document
+  .getElementById("reloadCharactersButton")
+  .addEventListener("click", () => {
+    characters = loadCharacters();
+    displayCharacterOptions();
+
+    skillValueInput.value = 50;
+  });
