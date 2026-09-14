@@ -122,6 +122,39 @@
     <p id="savedSkillList"></p>
 </section>
 
+<section id="characterSkillSection">
+  <h2>キャラクター・技能選択</h2>
+
+  <label for="characterSelect">
+    キャラクター
+  </label>
+
+  <select id="characterSelect">
+    <option value="">キャラクターを選択してください</option>
+  </select>
+
+  <label for="skillSelect">
+    技能
+  </label>
+
+  <select id="skillSelect" disabled>
+    <option value="">先にキャラクターを選択してください</option>
+  </select>
+
+  <label for="selectedSkillValue">
+    技能値
+  </label>
+
+  <input
+    type="number"
+    id="selectedSkillValue"
+    min="0"
+    max="100"
+    value="50"
+    readonly
+  >
+</section>
+
 
     <!-- 出目 -->
     <section id="result">
