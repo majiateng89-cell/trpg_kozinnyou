@@ -680,61 +680,59 @@ font-size:20px;
    ダークモード
 ========================= */
 
+/* ダークモード時のページ全体 */
 body.dark-mode {
+  background-color: #181818 !important;
+  color: #eeeeee;
+  min-height: 100vh;
+}
+
+/* HTML全体の背景 */
+html:has(body.dark-mode) {
   background-color: #181818;
-  color: #eeeeee;
 }
 
+/* メイン領域 */
 body.dark-mode main {
-  color: #eeeeee;
+  background-color: transparent;
 }
 
+/* セクション */
 body.dark-mode section {
-  background-color: #252525;
+  background-color: #252525 !important;
   color: #eeeeee;
-  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.08);
 }
 
-/* 入力欄・選択欄 */
+/* ヘッダー */
+body.dark-mode header {
+  background-color: transparent;
+  color: #eeeeee;
+}
+
+/* 入力欄 */
 body.dark-mode input,
 body.dark-mode select,
 body.dark-mode textarea {
-  background-color: #333333;
-  color: #ffffff;
-  border: 1px solid #666666;
+  background-color: #333333 !important;
+  color: #ffffff !important;
+  border-color: #666666;
 }
 
-/* ボタン */
-body.dark-mode button {
-  background-color: #444444;
-  color: #ffffff;
-  border-color: #777777;
-}
-
-/* リンク */
-body.dark-mode a {
-  color: #80bfff;
-}
-
-/* 履歴・お気に入りなど */
-body.dark-mode li,
-body.dark-mode p,
-body.dark-mode label {
+/* 結果表示・履歴・統計など */
+body.dark-mode #diceArea,
+body.dark-mode #totalArea,
+body.dark-mode #judgeArea,
+body.dark-mode #statisticsArea,
+body.dark-mode #historyList,
+body.dark-mode #favoriteList,
+body.dark-mode #savedSkillList {
+  background-color: #303030;
   color: #eeeeee;
 }
 
-/* 結果表示欄 */
-body.dark-mode #totalArea,
-body.dark-mode #judgeArea,
-body.dark-mode #statisticsArea {
-  background-color: #303030;
-  color: #ffffff;
-}
-
-/* ダイス表示 */
-body.dark-mode .dice {
-  background-color: #444444;
-  color: #ffffff;
-  border-color: #aaaaaa;
+/* リスト項目 */
+body.dark-mode li {
+  background-color: #333333;
+  color: #eeeeee;
 }
 ```
