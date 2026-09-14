@@ -996,18 +996,6 @@ function removeFavorite(notation) {
 
 }
 
-/*
-=========================================
-ダークモード実装
-=========================================
-*/
-
-const savedTheme = localStorage.getItem("trpgDiceTheme");
-
-if (savedTheme === "dark") {
-  document.body.classList.add("dark-mode");
-  themeToggle.textContent = "☀️ ライトモード";
-}
 
 /*
 =========================================
@@ -1062,6 +1050,22 @@ displayFavorites();
 displaySavedSkills();
 
 updateGameSystemDisplay();
+
+/*
+=========================================
+ダークモード初期化
+=========================================
+*/
+
+const savedTheme = localStorage.getItem("trpgDiceTheme");
+
+if (savedTheme === "dark") {
+  document.body.classList.add("dark-mode");
+  themeToggle.textContent = "☀️ ライトモード";
+} else {
+  document.body.classList.remove("dark-mode");
+  themeToggle.textContent = "🌙 ダークモード";
+}
 
 /*
 =========================================
