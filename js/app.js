@@ -466,6 +466,50 @@ function saveSkills() {
 
 /*
 =========================================
+技能値を読み込む関数
+=========================================
+*/
+
+function loadSkills() {
+
+    const savedData =
+        localStorage.getItem(
+            SKILL_STORAGE_KEY
+        );
+
+    if (!savedData) {
+        return [];
+    }
+
+    try {
+
+        const parsedData =
+            JSON.parse(savedData);
+
+        if (!Array.isArray(parsedData)) {
+            return [];
+        }
+
+        return parsedData.filter(
+            value =>
+                Number.isInteger(value) &&
+                value >= 1 &&
+                value <= 100
+        );
+
+    } catch (error) {
+
+        console.error(
+            "技能値の読み込みに失敗しました。",
+            error
+        );
+
+        return [];
+    }
+}
+
+/*
+=========================================
 保存した技能値を画面に表示
 =========================================
 */
