@@ -646,6 +646,25 @@ font-size:20px;
         gap: 6px;
         margin-bottom: 8px;
     }
+   
+/*キャラクター選択・キャラクタースキル選択*/
+   #characterSkillSection select,
+#characterSkillSection input {
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 12px;
+}
+
+@media screen and (max-width: 600px) {
+  #characterSkillSection {
+    padding: 15px;
+  }
+
+  #characterSkillSection select,
+  #characterSkillSection input {
+    font-size: 16px;
+  }
+}
 
     /* 横幅が大きくなりすぎる文字を折り返す */
     #favoriteList,
