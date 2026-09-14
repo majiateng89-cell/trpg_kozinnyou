@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>キャラクターシート</title>
+
+  <link rel="stylesheet" href="css/character.css">
+  <script type="module" src="js/character.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>キャラクターシート</h1>
+
+    <nav>
+      <a href="index.html">ダイスロールへ戻る</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 基本情報 -->
+    <section>
+      <h2>基本情報</h2>
+
+      <div class="form-grid">
+        <label>
+          キャラクター名
+          <input type="text" id="characterName" placeholder="例：探索者A">
+        </label>
+
+        <label>
+          プレイヤー名
+          <input type="text" id="playerName" placeholder="プレイヤー名">
+        </label>
+
+        <label>
+          年齢
+          <input type="number" id="age" min="0">
+        </label>
+
+        <label>
+          性別
+          <input type="text" id="gender">
+        </label>
+
+        <label>
+          職業
+          <input type="text" id="occupation">
+        </label>
+
+        <label>
+          出身
+          <input type="text" id="birthplace">
+        </label>
+      </div>
+    </section>
+
+    <!-- 能力値 -->
+    <section>
+      <h2>能力値</h2>
+
+      <div class="form-grid ability-grid">
+        <label>
+          STR
+          <input type="number" id="STR" min="0" max="100" value="50">
+        </label>
+
+        <label>
+          CON
+          <input type="number" id="CON" min="0" max="100" value="50">
+        </label>
+
+        <label>
+          POW
+          <input type="number" id="POW" min="0" max="100" value="50">
+        </label>
+
+        <label>
+          DEX
+          <input type="number" id="DEX" min="0" max="100" value="50">
+        </label>
+
+        <label>
+          APP
+          <input type="number" id="APP" min="0" max="100" value="50">
+        </label>
+
+        <label>
+          SIZ
+          <input type="number" id="SIZ" min="0" max="100" value="50">
+        </label>
+
+        <label>
+          INT
+          <input type="number" id="INT" min="0" max="100" value="50">
+        </label>
+
+        <label>
+          EDU
+          <input type="number" id="EDU" min="0" max="100" value="50">
+        </label>
+      </div>
+    </section>
+
+    <!-- 追加情報 -->
+    <section>
+      <h2>追加情報</h2>
+
+      <div class="form-grid">
+        <label>
+          耐久力
+          <input type="number" id="hp" min="0" value="10">
+        </label>
+
+        <label>
+          正気度
+          <input type="number" id="san" min="0" value="50">
+        </label>
+
+        <label>
+          マジック・ポイント
+          <input type="number" id="mp" min="0" value="10">
+        </label>
+
+        <label>
+          幸運
+          <input type="number" id="luck" min="0" value="50">
+        </label>
+      </div>
+    </section>
+
+    <!-- 技能値 -->
+    <section>
+      <h2>技能値</h2>
+
+      <div id="skillList"></div>
+
+      <button id="addSkillButton" type="button">
+        技能を追加
+      </button>
+    </section>
+
+    <!-- メモ -->
+    <section>
+      <h2>メモ</h2>
+
+      <textarea id="notes" rows="6"
+        placeholder="人物設定、所持品、背景など"></textarea>
+    </section>
+
+    <!-- 操作 -->
+    <section class="actions">
+      <button id="saveButton" type="button">
+        キャラクターを保存
+      </button>
+
+      <button id="loadButton" type="button">
+        保存データを読み込む
+      </button>
+
+      <button id="clearButton" type="button">
+        入力をクリア
+      </button>
+    </section>
+
+    <p id="message"></p>
+
+    <!-- 保存済みキャラクター -->
+    <section>
+      <h2>保存済みキャラクター</h2>
+      <div id="characterList"></div>
+    </section>
+  </main>
+</body>
+</html>
